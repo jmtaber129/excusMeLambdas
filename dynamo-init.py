@@ -12,7 +12,7 @@ def lambda_handler(event, context):
         TableName='Calls',
         KeySchema=[
             {
-                'AttributeName': 'datetime',
+                'AttributeName': 'time',
                 'KeyType': 'HASH'  #Sort key
             },
             {
@@ -26,7 +26,7 @@ def lambda_handler(event, context):
                 'AttributeType': 'N'
             },
             {
-                'AttributeName': 'datetime',
+                'AttributeName': 'time',
                 'AttributeType': 'N'
             }
 
