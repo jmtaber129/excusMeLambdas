@@ -22,8 +22,8 @@ def lambda_handler(event, context):
 
     table = dynamodb.Table('Calls')
 
-    number = event['number']
-    time = int(datetime.today().timestamp() + (event['delay'] * 60))
+    number = int(event['number'])
+    time = int(datetime.today().timestamp() + (int(event['delay']) * 60))
     print(time)
     caller = event['caller']
     excuse = event['excuse']

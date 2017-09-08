@@ -7,6 +7,8 @@ from botocore.exceptions import ClientError
 from twilio.twiml.voice_response import VoiceResponse
 
 def lambda_handler(event, context):
+  
+    print(event)
 
     # Helper class to convert a DynamoDB item to JSON.
     class DecimalEncoder(json.JSONEncoder):
@@ -18,7 +20,7 @@ def lambda_handler(event, context):
                     return int(o)
             return super(DecimalEncoder, self).default(o)
 
-    dynamodb = boto3.resource("dynamodb", region_name='us-west-2', endpoint_url="http://localhost:8000")
+    dynamodb = boto3.resource("dynamodb")
 
     table = dynamodb.Table('Calls')
 
@@ -44,12 +46,9 @@ def lambda_handler(event, context):
         # TODO(jmtaber129): Create Twilio markup.
         r = VoiceResponse()
         r.say("It's {0}, {1}!".format(item['caller'], item['excuse']))
-        return str(r)
-        
-
-if (__name__ == '__main__'):
-    event = {
-      'number': 6824297206,
-      'time': 1492938267
-    }
-    lambda_handler(event, {})
+        res = {
+          "statusCode": 200,
+          "headers": {},
+          "body": str(r)
+        }
+        return res
